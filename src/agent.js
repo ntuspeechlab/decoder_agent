@@ -6,6 +6,7 @@ const fs = require("fs");
 const path = require("path");
 const AdmZip = require("adm-zip");
 const queue = require("queue");
+const glob = require("glob")
 
 const AWS = require("aws-sdk");
 const {
@@ -425,7 +426,7 @@ function sendTranscriptionFiles(callback) {
   return new Promise((resolve, reject) => {
     var name = path.parse(converted_filename).name;
     var original_name = path.parse(original_filename).name;
-    fs.readdir(`./output/${name}`, (err, files) => {
+    glob(`./output/${name}.*`, (err, files) => {
       if (files === undefined) {
         outgoingRequestsQueue.push((cb) =>
           sendFailureStatus("TRANSCRIPTIONS_NOT_FOUND", cb)
@@ -435,7 +436,7 @@ function sendTranscriptionFiles(callback) {
 
       var zip = new AdmZip();
       files.forEach((itemname) => {
-        zip.addLocalFile(`./output/${name}/${itemname}`);
+        zip.addLocalFile(itemname);
       });
 
       var zipBuffer = zip.toBuffer();
