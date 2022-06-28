@@ -20,15 +20,19 @@ dotenv.config();
 ////////////////////////////////////////////////////////////////////////////////
 // global variables
 ////////////////////////////////////////////////////////////////////////////////
+
+const use_storage = process.env.USE_STORAGE ? process.env.USE_STORAGE : 'azure'; // aws | azure
+
+const azure_account = process.env.AZURE_ACCOUNT ? process.env.AZURE_ACCOUNT : 'meadow9storage';
+const azure_account_key = process.env.AZURE_ACCOUNT_KEY ? process.env.AZURE_ACCOUNT_KEY : 'BuWq4wfXVi9x8100plDmIn7A7PRKWp5SAagairXLbooWR30dtuLAbXVYD389G/trfPlCExytkyFlXXMc7TZZrQ==';
+const azure_container = process.env.AZURE_CONTAINER ? process.env.AZURE_CONTAINER : 'meadow9transcript';
+
 const aws_access_key_id = process.env.AWS_ACCESS_KEY_ID;
 const aws_secret_access_key = process.env.AWS_SECRET_ACCESS_KEY;
 const aws_bucket = process.env.AWS_BUCKET;
 
-const azure_account = process.env.AZURE_ACCOUNT;
-const azure_account_key = process.env.AZURE_ACCOUNT_KEY;
-const azure_container = process.env.AZURE_CONTAINER;
 
-const use_storage = process.env.USE_STORAGE; // aws | azure
+
 
 const remoteIPv4Url = "http://ipv4bot.whatismyipaddress.com/"; // to get external ip
 const taskControllerEndpoint = process.env.TASKCONTROLLER_URL;
