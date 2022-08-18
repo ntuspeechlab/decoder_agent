@@ -434,7 +434,6 @@ function saveMetadataFile(val) {
         console.log(`FILE: Metadata file for ${name} saved.`);
       }
     });
-    
   } else {
     console.log(`FILE: Metadata file for ${name} was not created.`);
   }
@@ -645,4 +644,3 @@ process.on("SIGINT", () => {
 // execution starts here
 ////////////////////////////////////////////////////////////////////////////////
 initialize();
-
