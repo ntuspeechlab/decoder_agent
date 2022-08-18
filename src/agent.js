@@ -320,6 +320,7 @@ function handleTask(task) {
     formats: task.data.formats,
     numChn: task.data.numChn,
     type: task.data.type,
+    customData: task.data.customData
   };
   var ext = path.parse(original_filename).ext.replace(".", "");
 
@@ -414,7 +415,19 @@ function saveMetadataFile(val) {
         : undefined,
     };
 
-    fs.writeFile(`./input/${name}.txt`, JSON.stringify(data), (error) => {
+    for(const key of Object.keys(val.customData)) {
+      data[key] = val.customData[key]
+    }
+
+    fs.writeFile(`./input/${name}.json`, JSON.stringify(data), (error) => {
+      if (error) {
+        console.log(`FILE: Error creating metadata file. ${error}`);
+      } else {
+        console.log(`FILE: Metadata file for ${name} saved.`);
+      }
+    });
+
+    fs.writeFile(`./output/${name}.json`, JSON.stringify(data), (error) => {
       if (error) {
         console.log(`FILE: Error creating metadata file. ${error}`);
       } else {
@@ -462,7 +475,7 @@ function cleanUpDecoderFiles() {
   var name = path.parse(converted_filename).name;
 
   // remove metadata file
-  fs.unlink(`./input/${name}.txt`, (error) => {
+  fs.unlink(`./input/${name}.json`, (error) => {
     if (error)
       console.log(`CLEANUP: Error during removal of metadata file: ${error}`);
     else console.log(`CLEANUP: Metadata file ${name} removed.`);
@@ -631,3 +644,4 @@ process.on("SIGINT", () => {
 // execution starts here
 ////////////////////////////////////////////////////////////////////////////////
 initialize();
+
