@@ -379,6 +379,11 @@ function saveFileFromURL(url, dest) {
           file.on("close", () => {
             if (!error) {
               console.log(`FILE: Audio file of ${content_length} bytes saved.`);
+              try {
+                fs.copyFileSync(`./input/${dest}`, `./output/${dest}`);
+              } catch (error) {
+                console.log(`FILE: Error copying audio file to output. ${error}`);
+              }
               resolve();
             }
           });
